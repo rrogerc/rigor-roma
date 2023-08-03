@@ -6,6 +6,7 @@ import Notification from "./Components/Notification";
 import { Routes, Route } from "react-router-dom";
 import Timer from "./Pages/Timer";
 import Stopwatch from "./Pages/Stopwatch";
+import Statistics from "./Pages/Statistics";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/timer" element={<Timer />} />
         <Route path="/stopwatch" element={<Stopwatch />} />
+        <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </div>
   );
