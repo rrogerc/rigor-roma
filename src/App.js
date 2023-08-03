@@ -1,5 +1,6 @@
 // Components
 import Menu from "./Components/Menu";
+import Notification from "./Components/Notification";
 
 // Pages
 import { Routes, Route } from "react-router-dom";
@@ -10,6 +11,7 @@ const App = () => {
   return (
     <div className="container">
       <Menu />
+      <Notification />
       <Routes>
         <Route path="/timer" element={<Timer />} />
         <Route path="/stopwatch" element={<Stopwatch />} />
