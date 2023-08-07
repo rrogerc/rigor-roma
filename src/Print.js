@@ -1,10 +1,13 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addRigor } from "./reducers/rigorReducer";
 
 const Print = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.rigor);
 
   const print = () => {
-    console.log(user.rigor);
+    console.log(user);
+    dispatch(addRigor(10));
   };
 
   return (

@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 function Statistics() {
   const user = useSelector((state) => state.rigor);
 
-  // const data = Array.from({ length: 365 }, () =>
-  //   Math.floor(Math.random() * 10)
-  // );
+  const data = Array.from({ length: 365 }, () =>
+    Math.floor(Math.random() * 10)
+  );
 
   function formatDate(date) {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -19,11 +19,11 @@ function Statistics() {
     <div>
       {user.rigor.map((time) => (
         <p key={time.date}>
-          {formatDate(new Date(time.date))} {time.minutesFocused}
+          {formatDate(new Date(time.date))}: {time.minutesFocused} minutes
         </p>
       ))}
 
-      {/* <Heatmap data={data} /> */}
+      <Heatmap data={data} />
     </div>
   );
 }
