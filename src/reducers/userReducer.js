@@ -23,7 +23,7 @@ const userSlice = createSlice({
           today.getUTCDate()
         )
       ).toISOString();
-      
+
       const minutes = action.payload;
       const existingRigor = state.rigor.find((r) => r.date === curDay);
 
@@ -59,8 +59,8 @@ export function initializeUser() {
 
     if (loggedUser) {
       const user = JSON.parse(loggedUser);
-      dispatch(set(user));
       userService.setToken(user.token);
+      dispatch(fetchUser(user.id));
     }
   };
 }
@@ -77,7 +77,7 @@ export function attemptLogin(username, password) {
         JSON.stringify(user)
       );
       userService.setToken(user.token);
-      dispatch(set(user));
+      dispatch(fetchUser(user.id));
     } catch (error) {}
   };
 }
@@ -87,7 +87,7 @@ export function addRigor(minutes) {
     const state = getState();
     await userService.addMinutes(minutes, state.user.id);
     dispatch(addTime(minutes));
-    fetchUser(state.user.id);
+    dispatch(fetchUser(state.user.id));
   };
 }
 
