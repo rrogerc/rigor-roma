@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { addRigor } from "./reducers/rigorReducer";
+import { addRigor } from "./reducers/userReducer";
 
 const Print = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.rigor);
+  const user = useSelector((state) => state.user);
 
   const print = () => {
     console.log(user);

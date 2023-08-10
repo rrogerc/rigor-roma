@@ -9,8 +9,8 @@ function getDate() {
   return curDay;
 }
 
-const rigorSlice = createSlice({
-  name: "rigor",
+const userSlice = createSlice({
+  name: "user",
   initialState: [],
 
   reducers: {
@@ -24,9 +24,9 @@ const rigorSlice = createSlice({
   },
 });
 
-const { addTime, set } = rigorSlice.actions;
+const { addTime, set } = userSlice.actions;
 
-export function initializeRigor() {
+export function initializeUser() {
   return async (dispatch) => {
     dispatch(set(await userService.getUser()));
   };
@@ -38,4 +38,4 @@ export function addRigor(minutes) {
   };
 }
 
-export default rigorSlice.reducer;
+export default userSlice.reducer;

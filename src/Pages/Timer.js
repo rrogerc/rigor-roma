@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { addRigor } from "../reducers/rigorReducer";
+import { addRigor } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
+
+import { finishFocus } from "../reducers/notificationReducer";
 
 const Timer = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const Timer = () => {
     setInitial(minutes);
 
     e.target[0].value = "";
-    setTime(minutes * 60);
+    setTime(minutes);
   };
 
   useEffect(() => {
@@ -24,6 +26,8 @@ const Timer = () => {
       return () => clearTimeout(timer); // cleanup, runs when time changes outside
     }
     if (time === 0 && initial !== 0) {
+      dispatch(finishFocus(initial));
+
       dispatch(addRigor(initial));
       setInitial(0);
     }

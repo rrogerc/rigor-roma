@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
-import { notify } from "../reducers/notificationReducer";
+import { finishFocus } from "../reducers/notificationReducer";
 
 const Stopwatch = () => {
   const dispatch = useDispatch();
@@ -21,9 +21,7 @@ const Stopwatch = () => {
 
     if (isRunning) {
       const minutes = Math.floor(time / 60);
-      const seconds = time % 60;
-      const msg = `You did ${minutes} minutes and ${seconds} seconds of focused continuous work  `;
-      dispatch(notify(msg, "success"));
+      dispatch(finishFocus(minutes));
     }
     setIsRunning(!isRunning);
   };

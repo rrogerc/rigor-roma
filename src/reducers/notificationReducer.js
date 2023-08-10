@@ -19,9 +19,12 @@ const notificationSlice = createSlice({
 
 const { set, clear } = notificationSlice.actions;
 
-export const notify = (message, status) => {
+export const finishFocus = (minutes) => {
   return async (dispatch) => {
-    dispatch(set({ message, status }));
+    let msg = `You completed ${minutes} minutes of focused work!`;
+    if (minutes === 1) msg = `You completed ${minutes} minute of focused work!`;
+
+    dispatch(set({ message: msg, status: "success" }));
     setTimeout(() => {
       dispatch(clear());
     }, 5000);

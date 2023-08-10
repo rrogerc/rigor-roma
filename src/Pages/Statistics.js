@@ -2,7 +2,7 @@ import Heatmap from "../Components/Heatmap";
 import { useSelector } from "react-redux";
 
 function Statistics() {
-  const user = useSelector((state) => state.rigor);
+  const user = useSelector((state) => state.user);
 
   const data = Array.from({ length: 365 }, () =>
     Math.floor(Math.random() * 10)

@@ -13,7 +13,7 @@ import Statistics from "./Pages/Statistics";
 
 // redux
 import { useDispatch } from "react-redux";
-import { initializeRigor } from "./reducers/rigorReducer";
+import { initializeUser } from "./reducers/userReducer";
 
 // debug
 import Print from "./Print";
@@ -22,7 +22,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initializeRigor());
+    dispatch(initializeUser());
   }, [dispatch]);
 
   return (
