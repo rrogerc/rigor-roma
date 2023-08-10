@@ -31,4 +31,20 @@ export const finishFocus = (minutes) => {
   };
 };
 
+export const notifyLogin = (success) => {
+  return async (dispatch) => {
+    let msg;
+    if (success === true)
+      msg = "Successfully logged in! You can now track your focus time.";
+    else msg = "Failed to log in. Please check your username and password.";
+    console.log("ASdd");
+    const status = success ? "success" : "danger";
+
+    dispatch(set({ message: msg, status: status }));
+    setTimeout(() => {
+      dispatch(clear());
+    }, 5000);
+  };
+};
+
 export default notificationSlice.reducer;

@@ -23,7 +23,7 @@ function Statistics() {
         </p>
       ))}
 
-      <Heatmap data={data} />
+      {/* <Heatmap data={data} /> */}
     </div>
   );
 }

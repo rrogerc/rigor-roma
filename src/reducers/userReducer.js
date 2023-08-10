@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import userService from "../Services/userService";
 import loginService from "../Services/loginService";
+import { notifyLogin } from "./notificationReducer";
 
 const userSlice = createSlice({
   name: "user",
@@ -47,12 +48,12 @@ const userSlice = createSlice({
   },
 });
 
-const { addTime, set } = userSlice.actions;
+const { addTime, set, clear } = userSlice.actions;
 
 export function clearUser() {
   return async (dispatch) => {
     window.localStorage.removeItem("loggedUser_riggorromma");
-    dispatch(set(null));
+    dispatch(clear());
   };
 }
 
@@ -88,7 +89,10 @@ export function attemptLogin(username, password) {
       );
       userService.setToken(user.token);
       dispatch(fetchUser(user.id));
-    } catch (error) {}
+      dispatch(notifyLogin(true));
+    } catch (error) {
+      dispatch(notifyLogin(false));
+    }
   };
 }
 

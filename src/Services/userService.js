@@ -10,7 +10,7 @@ const setToken = (newToken) => {
 
 const getUser = (id) => {
   const config = { headers: { Authorization: token } };
-  console.log(token, id);
+  // console.log(token, id);
   const request = axios.get(`${baseUrl}/${id}`, config);
   return request.then((response) => response.data);
 };
