@@ -10,7 +10,7 @@ const userSlice = createSlice({
     set: (state, action) => {
       return {
         username: action.payload.username,
-        id: action.payload.id,
+        id: action.payload._id,
         rigor: action.payload.rigor,
       };
     },
@@ -41,10 +41,20 @@ const userSlice = createSlice({
       }
       console.log(JSON.parse(JSON.stringify(existingRigor)));
     },
+    clear: (state, action) => {
+      return null;
+    },
   },
 });
 
 const { addTime, set } = userSlice.actions;
+
+export function clearUser() {
+  return async (dispatch) => {
+    window.localStorage.removeItem("loggedUser_riggorromma");
+    dispatch(set(null));
+  };
+}
 
 export function fetchUser(id) {
   return async (dispatch) => {

@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 
 import { finishFocus } from "../reducers/notificationReducer";
 
+import { Form, Button } from "react-bootstrap";
+
 const Timer = () => {
   const dispatch = useDispatch();
   const [time, setTime] = useState(0);
@@ -17,7 +19,7 @@ const Timer = () => {
     setInitial(minutes);
 
     e.target[0].value = "";
-    setTime(minutes);
+    setTime(minutes * 60);
   };
 
   useEffect(() => {
@@ -38,11 +40,10 @@ const Timer = () => {
       <h1>Timer</h1>
       <p>{Math.floor(time / 60)} Minutes</p>
       <p>{time % 60} seconds</p>
-      <form onSubmit={setTimer}>
+      <Form onSubmit={setTimer}>
         <input type="number" min="0" step="1" />
-        <button type="submit">Start</button>
-      </form>
-      <p>Warning, leaving the page will reset the timer</p>
+        <Button type="submit">Start</Button>
+      </Form>
     </div>
   );
 };

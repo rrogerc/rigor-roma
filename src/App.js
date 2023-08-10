@@ -11,6 +11,7 @@ import Timer from "./Pages/Timer";
 import Stopwatch from "./Pages/Stopwatch";
 import Statistics from "./Pages/Statistics";
 import Login from "./Pages/Login";
+import About from "./Pages/About";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
@@ -40,11 +41,12 @@ const App = () => {
       <Menu />
       <Notification />
       <Routes>
+        <Route path="/" element={<About />} />
         <Route path="/timer" element={<Timer />} />
         <Route path="/stopwatch" element={<Stopwatch />} />
         <Route path="/statistics" element={<Statistics />} />
       </Routes>
-      <Print />
+      {/* <Print /> */}
     </div>
   );
 };
