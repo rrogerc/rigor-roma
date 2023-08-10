@@ -41,12 +41,12 @@ test("add data adds to existing time", async () => {
 
   await api
     .put(`/api/users/${user._id}/add`)
-    .send({ minutesFocused: 10 })
+    .send(10)
     .set("Authorization", "Bearer " + token);
 
   await api
     .put(`/api/users/${user._id}/add`)
-    .send({ minutesFocused: 10 })
+    .send(10)
     .set("Authorization", "Bearer " + token);
 
   const response2 = await api.get("/api/users");

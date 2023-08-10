@@ -43,26 +43,35 @@ userRouter.post("/", async (request, response, next) => {
 });
 
 userRouter.put("/:id/add", userExtractor, async (request, response) => {
+  const minutes = request.body.minutes;
+  // console.log("1aAsdd");
+
   if (!request.user || request.user._id.toString() !== request.params.id)
     return response.status(401).send("Unauthorized");
-  if (request.body.minutesFocused < 0)
-    return response.status(400).send("Minutes must be positive");
+  // console.log("12Asdd");
 
-  const minutesFocused = request.body.minutesFocused;
+  if (typeof minutes !== "number")
+    return response.status(400).send("Minutes must be a number");
+  // console.log("3Asdd");
+
+  if (minutes < 0) return response.status(400).send("Minutes must be positive");
+  // console.log("1Asdd");
+
   const user = await User.findById(request.params.id);
   const today = new Date();
   const curDay = new Date(
     Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
   );
+  // console.log("Asdd");
 
   const existingRigor = user.rigor.find((r) => +r.date === +curDay);
 
   if (existingRigor) {
-    existingRigor.minutesFocused += minutesFocused;
+    existingRigor.minutesFocused += minutes;
   } else {
     user.rigor.push({
       date: curDay,
-      minutesFocused: minutesFocused,
+      minutesFocused: minutes,
     });
   }
 
