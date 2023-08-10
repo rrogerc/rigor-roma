@@ -13,7 +13,7 @@ function Statistics() {
     return date.toLocaleDateString(undefined, options);
   }
   console.log(user);
-  if (!user || user.length === 0) return <div>Is Loading</div>;
+  if (!user || user.length === 0 || !user.rigor) return <div>Is Loading</div>;
 
   return (
     <div>

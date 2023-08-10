@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import userService from "../userService";
+import userService from "../Services/userService";
+import loginService from "../Services/loginService";
 
 function getDate() {
   const today = new Date();
@@ -11,7 +12,7 @@ function getDate() {
 
 const userSlice = createSlice({
   name: "user",
-  initialState: [],
+  initialState: null,
 
   reducers: {
     addTime: async (state, action) => {
@@ -28,7 +29,27 @@ const { addTime, set } = userSlice.actions;
 
 export function initializeUser() {
   return async (dispatch) => {
-    dispatch(set(await userService.getUser()));
+    const loggedUser = window.localStorage.getItem("loggedUser");
+
+    if (loggedUser) {
+      const user = JSON.parse(loggedUser);
+      dispatch(set(user));
+      userService.setToken(user.token);
+    }
+  };
+}
+
+export function attemptLogin(username, password) {
+  return async (dispatch) => {
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      });
+      window.localStorage.setItem("loggedUser", JSON.stringify(user));
+      userService.setToken(user.token);
+      dispatch(set(user));
+    } catch (error) {}
   };
 }
 
