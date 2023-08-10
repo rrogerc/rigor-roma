@@ -10,9 +10,10 @@ import { Routes, Route } from "react-router-dom";
 import Timer from "./Pages/Timer";
 import Stopwatch from "./Pages/Stopwatch";
 import Statistics from "./Pages/Statistics";
+import Login from "./Pages/Login";
 
 // redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { initializeUser } from "./reducers/userReducer";
 
 // debug
@@ -20,10 +21,19 @@ import Print from "./Print";
 
 const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(initializeUser());
   }, [dispatch]);
+
+  if (user === null) {
+    return (
+      <div className="container">
+        <Login />
+      </div>
+    );
+  }
 
   return (
     <div className="container">

@@ -7,7 +7,7 @@ const Print = () => {
 
   const print = () => {
     console.log(user);
-    dispatch(addRigor(10));
+    // dispatch(addRigor(10));
   };
 
   return (

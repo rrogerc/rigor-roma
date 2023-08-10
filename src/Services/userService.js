@@ -8,13 +8,17 @@ const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
 };
 
-const getUser = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data.find((user) => user.username === "user1"));
+const getUser = (id) => {
+  const config = { headers: { Authorization: token } };
+
+  const request = axios.get(`${baseUrl}/${id}`, config);
+  return request.then((response) => response.data);
 };
 
 const addMinutes = (minutes, id) => {
-  const request = axios.put(`${baseUrl}/${id}/add`, { minutesFocused: minutes });
+  const config = { headers: { Authorization: token } };
+  console.log("addMinutes", minutes, id);
+  const request = axios.put(`${baseUrl}/${id}/add`, { minutes }, config);
   return request.then((response) => response.data);
 };
 
