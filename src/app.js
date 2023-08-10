@@ -16,6 +16,7 @@ const errorHandler = require("./utils/errorHandler");
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('build'))
 
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
