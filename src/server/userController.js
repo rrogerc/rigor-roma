@@ -2,6 +2,9 @@ const userRouter = require("express").Router();
 const User = require("./userModel");
 const bcrypt = require("bcrypt");
 
+const userExtractor = require("../utils/userExtractor");
+
+// REMOVE FOR PRODUCTION
 userRouter.get("/", async (request, response) => {
   let users = await User.find({});
   // console.log("asasdd");
@@ -14,6 +17,7 @@ userRouter.get("/:id", async (request, response) => {
   response.json(user);
 });
 
+// REMOVE FOR PRODUCTION
 userRouter.post("/", async (request, response, next) => {
   let user = new User(request.body);
 
@@ -37,6 +41,8 @@ userRouter.put("/:id/add", async (request, response) => {
   const curDay = new Date(
     Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
   );
+  if (minutesFocused < 0)
+    return response.status(400).send("Minutes must be positive");
 
   const existingRigor = user.rigor.find((r) => +r.date === +curDay);
 

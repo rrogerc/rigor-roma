@@ -1,23 +1,29 @@
 require("express-async-errors");
 
-// ------------ Server Import ------------ //
+// ----------------------------------------- //
+
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
-// ------------ Middleware ------------ //
-const cors = require("cors");
+// ----------------------------------------- //
+
+const userRouter = require("./server/userController");
+const loginRouter = require("./server/loginController");
+const errorHandler = require("./utils/errorHandler");
+
+// ----------------------------------------- //
+
 app.use(cors());
 app.use(express.json());
 
-// ------------ Router Middleware ------------ //
-const userRouter = require("./server/userController");
 app.use("/api/users", userRouter);
+app.use("/api/login", loginRouter);
 
-// ------------ Error Handler ------------ //
-const errorHandler = require("./utils/errorHandler");
 app.use(errorHandler);
 
-// ------------ Database Connection ------------ //
+// ----------------------------------------- //
+
 const { MONGODB_URI } = require("./utils/configuration");
 const mongoose = require("mongoose");
 mongoose
@@ -29,5 +35,5 @@ mongoose
     console.log("connection failed");
   });
 
-// ------------ Export ------------ //
+// ----------------------------------------- //
 module.exports = app;
