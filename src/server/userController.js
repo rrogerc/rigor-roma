@@ -4,13 +4,13 @@ const bcrypt = require("bcrypt");
 
 userRouter.get("/", async (request, response) => {
   let users = await User.find({});
-  console.log("asasdd");
+  // console.log("asasdd");
   response.json(users);
 });
 
 userRouter.get("/:id", async (request, response) => {
   const id = request.params.id;
-  const user = User.findById(id);
+  const user = await User.findById(id);
   response.json(user);
 });
 
@@ -34,12 +34,23 @@ userRouter.put("/:id/add", async (request, response) => {
   const minutesFocused = request.body.minutesFocused;
   const user = await User.findById(request.params.id);
   const today = new Date();
+  const curDay = new Date(
+    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
+  );
 
-  user.rigor = user.rigor.concat({
-    date: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
-    minutesFocused: minutesFocused,
-  });
-  user.save();
+  const existingRigor = user.rigor.find((r) => +r.date === +curDay);
+
+  if (existingRigor) {
+    existingRigor.minutesFocused += minutesFocused;
+  } else {
+    user.rigor.push({
+      date: curDay,
+      minutesFocused: minutesFocused,
+    });
+  }
+
+  await user.save();
+  response.status(200).send("Minutes added successfully!");
 });
 
 module.exports = userRouter;

@@ -18,8 +18,27 @@ beforeEach(async () => {
   }
 });
 
+const mongoose = require("mongoose");
+afterAll(async () => {
+  await mongoose.connection.close();
+});
+
 test("data in correct", async () => {
   const response = await api.get("/api/users");
 
   expect(response.body).toHaveLength(data.length);
+});
+
+test("add data adds to existing time", async () => {
+  const response = await api.get("/api/users");
+  const user = response.body[0];
+  // console.log(user._id);
+
+  await api.put(`/api/users/${user._id}/add`).send({ minutesFocused: 10 });
+  await api.put(`/api/users/${user._id}/add`).send({ minutesFocused: 10 });
+
+  const response2 = await api.get("/api/users");
+  const user2 = response2.body[0];
+
+  expect(user2.rigor[3].minutesFocused).toBe(20);
 });
