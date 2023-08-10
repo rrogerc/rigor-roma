@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
 
+import { addRigor } from "../reducers/rigorReducer";
+import { useDispatch } from "react-redux";
+
 const Timer = () => {
+  const dispatch = useDispatch();
   const [time, setTime] = useState(0);
+  const [initial, setInitial] = useState(0);
 
   const setTimer = (e) => {
     e.preventDefault();
 
-    const minutes = e.target[0].value;
-    e.target[0].value = "";
+    const minutes = Number(e.target[0].value);
+    setInitial(minutes);
 
+    e.target[0].value = "";
     setTime(minutes * 60);
   };
 
@@ -17,7 +23,11 @@ const Timer = () => {
       const timer = setTimeout(() => setTime(time - 1), 1000);
       return () => clearTimeout(timer); // cleanup, runs when time changes outside
     }
-  }, [time]);
+    if (time === 0 && initial !== 0) {
+      dispatch(addRigor(initial));
+      setInitial(0);
+    }
+  }, [time, initial, dispatch]);
 
   return (
     <div>
