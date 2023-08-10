@@ -1,4 +1,4 @@
-const User = require("../models/userModel");
+const User = require("../server/userModel");
 const jwt = require("jsonwebtoken");
 
 const userExtractor = async (request, response, next) => {
@@ -16,4 +16,4 @@ const userExtractor = async (request, response, next) => {
   next();
 };
 
-export default userExtractor;
+module.exports = userExtractor;
