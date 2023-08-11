@@ -1,16 +1,7 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-
-import { useDispatch } from "react-redux";
-import { clearUser } from "../reducers/userReducer";
+import { Container, Row, Col } from "react-bootstrap";
 
 const About = () => {
-  const dispatch = useDispatch();
-
-  const logout = () => {
-    dispatch(clearUser());
-  };
-
   return (
     <Container className="mt-5">
       <Row>
@@ -25,8 +16,6 @@ const About = () => {
           </p>
         </Col>
       </Row>
-
-      <Button onClick={logout}>Logout</Button>
     </Container>
   );
 };

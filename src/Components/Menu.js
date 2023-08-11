@@ -1,7 +1,19 @@
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser } from "../reducers/userReducer";
+
 const Menu = () => {
+  const user = useSelector((state) => state.user);
+  const isLoggedIn = user == null ? false : true; 
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -10,7 +22,7 @@ const Menu = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav>
+          <Nav className="mr-auto">
             <Nav.Link as={Link} to="/timer">
               Timer
             </Nav.Link>
@@ -22,6 +34,17 @@ const Menu = () => {
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <Nav>
+          {isLoggedIn ? (
+            <Button variant="outline-primary" onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : (
+            <Nav.Link as={Link} to="/login" className="btn btn-outline-primary">
+              Login
+            </Nav.Link>
+          )}
+        </Nav>
       </Container>
     </Navbar>
   );
