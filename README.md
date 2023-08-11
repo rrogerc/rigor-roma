@@ -1,3 +1,10 @@
+# Rigor Roma Frontend
+
+## [rigor-roma](https://rigor-roma.fly.dev/)
+This is the frontend to my personalized minimalistic Pomodoro web app.
+
+The rest is from the create-react-app command
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -37,7 +37,7 @@ export const notifyLogin = (success) => {
     if (success === true)
       msg = "Successfully logged in! You can now track your focus time.";
     else msg = "Failed to log in. Please check your username and password.";
-    console.log("ASdd");
+    // console.log("ASdd");
     const status = success ? "success" : "danger";
 
     dispatch(set({ message: msg, status: status }));
