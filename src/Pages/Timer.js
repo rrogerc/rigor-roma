@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { addRigor } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
-import { finishFocus } from "../reducers/notificationReducer";
+import { finishFocus, notify } from "../reducers/notificationReducer";
 import { setRunFalse, setRunTrue } from "../reducers/runningReducer";
 
 import { Form, Button } from "react-bootstrap";
@@ -16,6 +16,12 @@ const Timer = () => {
     e.preventDefault();
 
     const minutes = Number(e.target[0].value);
+
+    if (minutes === 0) {
+      dispatch(notify("Time set be be greater than 0 minutes", "danger"));
+      return;
+    }
+
     setInitial(minutes);
     dispatch(setRunTrue());
 
@@ -28,7 +34,6 @@ const Timer = () => {
       const timer = setTimeout(() => setTime(time - 1), 1000);
       return () => {
         clearTimeout(timer);
-        dispatch(setRunFalse());
       }; // cleanup, runs when time changes outside
     }
     if (time === 0 && initial !== 0) {
@@ -39,20 +44,30 @@ const Timer = () => {
     }
   }, [time, initial, dispatch]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(setRunFalse());
+    };
+  }, [dispatch]);
+
   return (
-    <div>
+    <div className="d-flex justify-content-center align-items-center vh-95 flex-column mt-2">
       <h1>Timer</h1>
       {time > 0 ? (
-        <>
-          <p>{Math.floor(time / 60)} Minutes</p>
-          <p>{time % 60} seconds</p>
-        </>
+        <div className="mt-3 d-flex align-items-center flex-column">
+          <h6 className="display-6">{Math.floor(time / 60)} Minutes</h6>
+          <h6> {time % 60} seconds</h6>
+        </div>
       ) : null}
       {time === 0 ? (
-        <Form onSubmit={setTimer}>
-          <input type="number" min="0" step="1" />
-          <Button type="submit">Start</Button>
-        </Form>
+        <>
+          <Form onSubmit={setTimer} id="setForm">
+            <input type="number" min="0" step="1" />
+          </Form>
+          <Button type="submit" form="setForm" className="mt-3">
+            Start
+          </Button>
+        </>
       ) : null}
     </div>
   );

@@ -18,10 +18,15 @@ const Stopwatch = () => {
       const timer = setTimeout(() => setTime(time + 1), 1000);
       return () => {
         clearTimeout(timer);
-        dispatch(setRunFalse());
       }; // cleanup, runs when time changes outside
     }
   }, [time, isRunning, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setRunFalse());
+    };
+  }, [dispatch]);
 
   const toggleTimer = () => {
     if (!isRunning) {
@@ -31,20 +36,24 @@ const Stopwatch = () => {
     if (isRunning) {
       const minutes = Math.floor(time / 60);
       if (minutes > 0) {
-        dispatch(setRunFalse());
         dispatch(finishFocus(minutes));
         dispatch(addRigor(minutes));
       }
+      dispatch(setRunFalse());
     }
     setIsRunning(!isRunning);
   };
 
   return (
-    <div>
-      <h1>Stopwatch</h1>
-      <p>{Math.floor(time / 60)} minutes</p>
-      <p>{time % 60} seconds</p>
-      <Button variant={isRunning ? "danger" : "primary"} onClick={toggleTimer}>
+    <div className="d-flex justify-content-center align-items-center vh-95 flex-column mt-2">
+      <h1 className="mb-3">Stopwatch</h1>
+      {isRunning ? (
+        <div className="mt-3 mb-3 d-flex align-items-center flex-column">
+          <h6 className="display-6">{Math.floor(time / 60)} minutes</h6>
+          <h6>{time % 60} seconds</h6>
+        </div>
+      ) : null}
+      <Button className="mt-1" variant={isRunning ? "danger" : "primary"} onClick={toggleTimer}>
         {isRunning ? "Stop" : "Start"}
       </Button>
     </div>
