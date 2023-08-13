@@ -35,6 +35,18 @@ const About = () => {
           </p>
         </Col>
       </Row>
+      <Row className="mt-5">
+        <Col className="text-center">
+          Made By: {" "}
+          <a
+            href="https://github.com/Chen-Prototypes"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Chen-Prototypes
+          </a>
+        </Col>
+      </Row>
     </Container>
   );
 };
