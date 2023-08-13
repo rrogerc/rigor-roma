@@ -9,15 +9,18 @@ import { useLocation } from "react-router-dom";
 
 const Menu = () => {
   const user = useSelector((state) => state.user);
+  const isRunning = useSelector((state) => state.running);
   const isLoggedIn = user == null ? false : true;
-  const location = useLocation();
 
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(clearUser());
     dispatch(notifyLogout());
   };
+
+  if (isRunning) return <></>;
 
   return (
     <Navbar bg="light" expand="lg">

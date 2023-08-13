@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { finishFocus } from "../reducers/notificationReducer";
 import { addRigor } from "../reducers/userReducer";
+import { setRunFalse, setRunTrue } from "../reducers/runningReducer";
 
 import { Button } from "react-bootstrap";
 
@@ -15,16 +16,22 @@ const Stopwatch = () => {
   useEffect(() => {
     if (isRunning) {
       const timer = setTimeout(() => setTime(time + 1), 1000);
-      return () => clearTimeout(timer); // cleanup, runs when time changes outside
+      return () => {
+        clearTimeout(timer);
+        dispatch(setRunFalse());
+      }; // cleanup, runs when time changes outside
     }
-  }, [time, isRunning]);
+  }, [time, isRunning, dispatch]);
 
   const toggleTimer = () => {
-    if (!isRunning) setTime(0);
-
+    if (!isRunning) {
+      setTime(0);
+      dispatch(setRunTrue());
+    }
     if (isRunning) {
       const minutes = Math.floor(time / 60);
       if (minutes > 0) {
+        dispatch(setRunFalse());
         dispatch(finishFocus(minutes));
         dispatch(addRigor(minutes));
       }
