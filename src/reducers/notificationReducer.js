@@ -58,4 +58,13 @@ export const notifyLogout = () => {
   };
 };
 
+export const notify = (msg, status) => {
+  return async (dispatch) => {
+    dispatch(set({ message: msg, status: status }));
+    setTimeout(() => {
+      dispatch(clear());
+    }, 5000);
+  };
+};
+
 export default notificationSlice.reducer;

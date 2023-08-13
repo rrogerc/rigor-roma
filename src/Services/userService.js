@@ -22,5 +22,10 @@ const addMinutes = (minutes, id) => {
   return request.then((response) => response.data);
 };
 
+const userCreate = (username, password) => {
+  const request = axios.post(baseUrl, { username, password });
+  return request.then((response) => response.data);
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getUser, addMinutes, setToken };
+export default { getUser, addMinutes, setToken, userCreate };

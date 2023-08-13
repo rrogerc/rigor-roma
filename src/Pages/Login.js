@@ -24,6 +24,11 @@ const Login = () => {
     setPassword("");
   };
 
+  const navigateCreateAccount = (e) => {
+    e.preventDefault();
+    navigate("/create-account");
+  };
+
   return (
     <>
       <h2>Login</h2>
@@ -33,6 +38,7 @@ const Login = () => {
           <Form.Control
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className="mb-2"
           />
 
           <Form.Label>Password: </Form.Label>
@@ -40,13 +46,19 @@ const Login = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="mb-2"
           />
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" className="me-2">
             Login
           </Button>
         </Form.Group>
       </Form>
+
+      <p className="mb-1 mt-4">Don't have an account?</p>
+      <Button variant="outline-secondary" onClick={navigateCreateAccount}>
+        Create Account
+      </Button>
     </>
   );
 };
