@@ -3,16 +3,35 @@ import { Container, Row, Col } from "react-bootstrap";
 
 const About = () => {
   return (
-    <Container className="mt-5">
+    <Container>
       <Row>
         <Col>
           <h2>An Opinionated Pomodoro Timer!</h2>
           <p>
-            This web app is a simple pomodoro timer with a basic changes. First
-            you cant pause a session, time only counts if you finish what you
-            decided to started, also, time only counts in minutes. If you don't
-            want to set a specific timer you can use the stopwatch. The
-            stopwatch is for when you just wanna focus till you can't anymore.
+            We've introduced a few thoughtful modifications to help you stay
+            committed to your tasks:
+          </p>
+          <ul>
+            <li>
+              <strong>No Pauses Allowed</strong>: Once you start a session, see
+              it through to the end. We believe in the power of undivided
+              attention.
+            </li>
+            <li>
+              <strong>Minute-Only Tracking</strong>: We've simplified time
+              tracking to count only in minutes, helping you concentrate on the
+              task at hand without sweating the seconds.
+            </li>
+            <li>
+              <strong>Freestyle Focus with Stopwatch</strong>: Not sure how long
+              a task will take? That's okay! Use our stopwatch feature, designed
+              for those times when you simply want to focus until your natural
+              break point.
+            </li>
+          </ul>
+          <p>
+            Dive in and make the most of your focused sessions. Happy
+            concentrating!
           </p>
         </Col>
       </Row>

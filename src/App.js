@@ -23,7 +23,6 @@ import Print from "./Print";
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(initializeUser());
