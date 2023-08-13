@@ -5,14 +5,18 @@ import { attemptLogin } from "../reducers/userReducer";
 
 import { Form, Button } from "react-bootstrap";
 
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const login = (e) => {
     e.preventDefault();
+    navigate("/");
 
     dispatch(attemptLogin(username, password));
 

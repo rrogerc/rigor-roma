@@ -47,4 +47,15 @@ export const notifyLogin = (success) => {
   };
 };
 
+export const notifyLogout = () => {
+  return async (dispatch) => {
+    let msg = "Successfully logged out!";
+
+    dispatch(set({ message: msg, status: "success" }));
+    setTimeout(() => {
+      dispatch(clear());
+    }, 5000);
+  };
+};
+
 export default notificationSlice.reducer;

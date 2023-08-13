@@ -1,7 +1,7 @@
 import Heatmap from "../Components/Heatmap";
 import { useSelector } from "react-redux";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 
 function Statistics() {
   const user = useSelector((state) => state.user);
@@ -19,9 +19,7 @@ function Statistics() {
     return (
       <Container className="mt-5">
         <Row>
-          <Col>
-            <p>Login to see your statistics.</p>
-          </Col>
+          <h5>Login to see your statistics.</h5>
         </Row>
       </Container>
     );

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../reducers/userReducer";
+import { notifyLogout } from "../reducers/notificationReducer";
 
 import { useLocation } from "react-router-dom";
 
@@ -15,6 +16,7 @@ const Menu = () => {
 
   const handleLogout = () => {
     dispatch(clearUser());
+    dispatch(notifyLogout());
   };
 
   return (
@@ -45,9 +47,9 @@ const Menu = () => {
               Logout
             </Button>
           ) : (
-            <Nav.Link as={Link} to="/login" className="btn btn-outline-primary">
+            <Link as={Link} to="/login" className="btn btn-outline-success">
               Login
-            </Nav.Link>
+            </Link>
           )}
         </Nav>
       </Container>
