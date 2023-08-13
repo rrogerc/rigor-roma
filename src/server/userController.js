@@ -23,8 +23,13 @@ userRouter.get("/:id", userExtractor, async (request, response) => {
 userRouter.post("/", async (request, response, next) => {
   if (!request.body.password || !request.body.username)
     return response.status(400).send("Missing username or password");
-  if (request.body.password.length < 3) {
-    const error = new Error("Password must have minimum length of 3");
+  if (request.body.password.length < 5) {
+    const error = new Error("Password must have minimum length of 5");
+    error.name = "ValidationError";
+    return next(error);
+  }
+  if (request.body.username.length < 3) {
+    const error = new Error("Username must have minimum length of 3");
     error.name = "ValidationError";
     return next(error);
   }
