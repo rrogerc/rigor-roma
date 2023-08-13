@@ -10,6 +10,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 // App
 import App from "./App";
+import "./app.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
