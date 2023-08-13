@@ -28,15 +28,6 @@ const App = () => {
     dispatch(initializeUser());
   }, [dispatch]);
 
-  if (user === null) {
-    return (
-      <div className="container">
-        <Notification />
-        <Login />
-      </div>
-    );
-  }
-
   return (
     <div className="container">
       <Menu />
@@ -46,6 +37,7 @@ const App = () => {
         <Route path="/timer" element={<Timer />} />
         <Route path="/stopwatch" element={<Stopwatch />} />
         <Route path="/statistics" element={<Statistics />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       {/* <Print /> */}
     </div>

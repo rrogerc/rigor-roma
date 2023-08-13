@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import { addRigor } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
-
 import { finishFocus } from "../reducers/notificationReducer";
 
 import { Form, Button } from "react-bootstrap";

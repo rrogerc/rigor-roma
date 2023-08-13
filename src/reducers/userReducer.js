@@ -50,17 +50,17 @@ const userSlice = createSlice({
 
 const { addTime, set, clear } = userSlice.actions;
 
+function fetchUser(id) {
+  return async (dispatch) => {
+    const user = await userService.getUser(id);
+    dispatch(set(user));
+  };
+}
+
 export function clearUser() {
   return async (dispatch) => {
     window.localStorage.removeItem("loggedUser_riggorromma");
     dispatch(clear());
-  };
-}
-
-export function fetchUser(id) {
-  return async (dispatch) => {
-    const user = await userService.getUser(id);
-    dispatch(set(user));
   };
 }
 
@@ -99,6 +99,8 @@ export function attemptLogin(username, password) {
 export function addRigor(minutes) {
   return async (dispatch, getState) => {
     const state = getState();
+    if (!state.user) return;
+
     await userService.addMinutes(minutes, state.user.id);
     dispatch(addTime(minutes));
     dispatch(fetchUser(state.user.id));

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { finishFocus } from "../reducers/notificationReducer";
+import { addRigor } from "../reducers/userReducer";
 
 import { Button } from "react-bootstrap";
 
@@ -23,7 +24,10 @@ const Stopwatch = () => {
 
     if (isRunning) {
       const minutes = Math.floor(time / 60);
-      dispatch(finishFocus(minutes));
+      if (minutes > 0) {
+        dispatch(finishFocus(minutes));
+        dispatch(addRigor(minutes));
+      }
     }
     setIsRunning(!isRunning);
   };
@@ -33,7 +37,9 @@ const Stopwatch = () => {
       <h1>Stopwatch</h1>
       <p>{Math.floor(time / 60)} minutes</p>
       <p>{time % 60} seconds</p>
-      <Button onClick={toggleTimer}>{isRunning ? "Stop" : "Start"}</Button>
+      <Button variant={isRunning ? "danger" : "primary"} onClick={toggleTimer}>
+        {isRunning ? "Stop" : "Start"}
+      </Button>
     </div>
   );
 };

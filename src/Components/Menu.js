@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../reducers/userReducer";
 
+import { useLocation } from "react-router-dom";
+
 const Menu = () => {
   const user = useSelector((state) => state.user);
-  const isLoggedIn = user == null ? false : true; 
+  const isLoggedIn = user == null ? false : true;
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -35,7 +38,9 @@ const Menu = () => {
           </Nav>
         </Navbar.Collapse>
         <Nav>
-          {isLoggedIn ? (
+          {location.pathname === "/login" ? (
+            <></>
+          ) : isLoggedIn ? (
             <Button variant="outline-primary" onClick={handleLogout}>
               Logout
             </Button>

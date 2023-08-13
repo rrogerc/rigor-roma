@@ -1,6 +1,8 @@
 import Heatmap from "../Components/Heatmap";
 import { useSelector } from "react-redux";
 
+import { Container, Row, Col } from "react-bootstrap";
+
 function Statistics() {
   const user = useSelector((state) => state.user);
 
@@ -12,8 +14,17 @@ function Statistics() {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString(undefined, options);
   }
-  console.log(user);
-  if (!user || user.length === 0 || !user.rigor) return <div>Is Loading</div>;
+  // console.log(user);
+  if (!user || user.length === 0 || !user.rigor)
+    return (
+      <Container className="mt-5">
+        <Row>
+          <Col>
+            <p>Login to see your statistics.</p>
+          </Col>
+        </Row>
+      </Container>
+    );
 
   return (
     <div>
