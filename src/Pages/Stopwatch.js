@@ -49,8 +49,8 @@ const Stopwatch = () => {
       <h1 className="mb-3">Stopwatch</h1>
       {isRunning ? (
         <div className="mt-3 mb-3 d-flex align-items-center flex-column">
-          <h6 className="display-6">{Math.floor(time / 60)} minutes</h6>
-          <h6>{time % 60} seconds</h6>
+          <h6 className="display-6 text-primary">{Math.floor(time / 60)} minutes</h6>
+          <h6 className="text-warning">{time % 60} seconds</h6>
         </div>
       ) : null}
       <Button className="mt-1" variant={isRunning ? "danger" : "primary"} onClick={toggleTimer}>

@@ -1,7 +1,7 @@
 import Heatmap from "../Components/Heatmap";
 import { useSelector } from "react-redux";
 
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Table } from "react-bootstrap";
 
 function Statistics() {
   const user = useSelector((state) => state.user);
@@ -25,15 +25,26 @@ function Statistics() {
     );
 
   return (
-    <div>
-      {user.rigor.map((time) => (
-        <p key={time.date}>
-          {formatDate(new Date(time.date))}: {time.minutesFocused} minutes
-        </p>
-      ))}
+    <Container className="d-flex justify-content-center align-items-center vh-95 flex-column">
+      <Table striped bordered hover className="mt-5">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Minutes Focused</th>
+          </tr>
+        </thead>
+        <tbody>
+          {user.rigor.map((time) => (
+            <tr key={time.date}>
+              <td>{formatDate(new Date(time.date))}</td>
+              <td>{time.minutesFocused} minutes</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
 
       {/* <Heatmap data={data} /> */}
-    </div>
+    </Container>
   );
 }
 

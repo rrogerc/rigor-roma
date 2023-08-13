@@ -8,17 +8,17 @@ const About = () => {
         <Col>
           <h2>An Opinionated Pomodoro Timer!</h2>
           <p>
-            We've introduced a few thoughtful modifications to help you stay
+            I've introduced a few thoughtful modifications to help you stay
             committed to your tasks:
           </p>
           <ul>
             <li>
               <strong>No Pauses Allowed</strong>: Once you start a session, see
-              it through to the end. We believe in the power of undivided
+              it through to the end. I believe in the power of undivided
               attention.
             </li>
             <li>
-              <strong>Minute-Only Tracking</strong>: We've simplified time
+              <strong>Minute-Only Tracking</strong>: I've simplified time
               tracking to count only in minutes, helping you concentrate on the
               task at hand without sweating the seconds.
             </li>
