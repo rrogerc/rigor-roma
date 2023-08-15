@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const userExtractor = require("../utils/userExtractor");
 
 // REMOVE FOR PRODUCTION
-userRouter.get("/", async (request, response) => {
+userRouter.get("/", async (_request, response) => {
   let users = await User.find({});
   // console.log("asasdd");
   response.json(users);
