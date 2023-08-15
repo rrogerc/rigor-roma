@@ -17,7 +17,7 @@ const getUser = (id) => {
 
 const addMinutes = (minutes, id) => {
   const config = { headers: { Authorization: token } };
-  console.log("addMinutes", minutes, id);
+  // console.log("addMinutes", minutes, id);
   const request = axios.put(`${baseUrl}/${id}/add`, { minutes }, config);
   return request.then((response) => response.data);
 };

@@ -37,9 +37,10 @@ const Timer = () => {
       }; // cleanup, runs when time changes outside
     }
     if (time === 0 && initial !== 0) {
-      dispatch(finishFocus(initial));
+      const tmp_init = initial;
+      dispatch(finishFocus(tmp_init));
       dispatch(setRunFalse());
-      dispatch(addRigor(initial));
+      dispatch(addRigor(tmp_init));
       setInitial(0);
     }
   }, [time, initial, dispatch]);

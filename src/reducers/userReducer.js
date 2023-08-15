@@ -40,7 +40,7 @@ const userSlice = createSlice({
           minutesFocused: minutes,
         });
       }
-      console.log(JSON.parse(JSON.stringify(existingRigor)));
+      // console.log(JSON.parse(JSON.stringify(existingRigor)));
     },
     clear: (state, action) => {
       return null;
@@ -98,6 +98,7 @@ export function attemptLogin(username, password) {
 
 export function addRigor(minutes) {
   return async (dispatch, getState) => {
+    // console.log("adding rigor", minutes);
     const state = getState();
     if (!state.user) return;
 

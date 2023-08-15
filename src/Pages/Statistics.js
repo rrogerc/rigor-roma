@@ -9,6 +9,12 @@ function Statistics() {
   const data = Array.from({ length: 365 }, () =>
     Math.floor(Math.random() * 10)
   );
+  function parseLocalDate(dateString) {
+    const [year, month, day] = dateString
+      .split("-")
+      .map((s) => parseInt(s, 10));
+    return new Date(year, month - 1, day); // Remember, months are 0-based in JS
+  }
 
   function formatDate(date) {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -36,7 +42,7 @@ function Statistics() {
         <tbody>
           {user.rigor.map((time) => (
             <tr key={time.date}>
-              <td>{formatDate(new Date(time.date))}</td>
+              <td>{formatDate(parseLocalDate(time.date))}</td>
               <td>{time.minutesFocused} minutes</td>
             </tr>
           ))}
