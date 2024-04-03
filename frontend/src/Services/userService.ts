@@ -1,31 +1,29 @@
-import axios from "axios";
+import axios from 'axios';
 
-const baseUrl = "/api/users";
+const baseUrl = '/api/users';
 
-let token = null;
+let token: string | null = null;
 
-const setToken = (newToken) => {
+export const setToken = (newToken: string) => {
   token = `Bearer ${newToken}`;
 };
 
-const getUser = (id) => {
-  const config = { headers: { Authorization: token } };
-  // console.log(token, id);
+export const getUser = (id: string) => {
+  const config = {headers: {Authorization: token}};
   const request = axios.get(`${baseUrl}/${id}`, config);
-  return request.then((response) => response.data);
+
+  return request.then(response => response.data);
 };
 
-const addMinutes = (minutes, id) => {
-  const config = { headers: { Authorization: token } };
-  // console.log("addMinutes", minutes, id);
-  const request = axios.put(`${baseUrl}/${id}/add`, { minutes }, config);
-  return request.then((response) => response.data);
+export const addMinutes = (minutes: number, id: string) => {
+  const config = {headers: {Authorization: token}};
+  const request = axios.put(`${baseUrl}/${id}/add`, {minutes}, config);
+
+  return request.then(response => response.data);
 };
 
-const userCreate = (username, password) => {
-  const request = axios.post(baseUrl, { username, password });
-  return request.then((response) => response.data);
-};
+export const userCreate = (username: string, password: string) => {
+  const request = axios.post(baseUrl, {username, password});
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default { getUser, addMinutes, setToken, userCreate };
+  return request.then(response => response.data);
+};

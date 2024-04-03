@@ -2,8 +2,8 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AppDispatch} from '../store';
 import {notifyLogin} from './notificationReducer';
 
-import userService from '../Services/userService';
-import loginService from '../Services/loginService';
+import * as userService from '../Services/userService';
+import * as loginService from '../Services/loginService';
 
 import {UserState, Rigor} from '../types';
 
