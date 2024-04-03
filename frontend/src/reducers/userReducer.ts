@@ -1,21 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
-import userService from "../Services/userService";
-import loginService from "../Services/loginService";
-import { notifyLogin } from "./notificationReducer";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {AppDispatch, RootState} from '../store';
+import {notifyLogin} from './notificationReducer';
+
+import userService from '../Services/userService';
+import loginService from '../Services/loginService';
+
+import {UserState, Rigor} from '../types';
+
+const initialState: UserState | null = null;
 
 const userSlice = createSlice({
-  name: "user",
-  initialState: null,
-
+  name: 'user',
+  initialState,
   reducers: {
-    set: (state, action) => {
-      return {
-        username: action.payload.username,
-        id: action.payload._id,
-        rigor: action.payload.rigor,
-      };
-    },
-    addTime: (state, action) => {
+    set: (state, action: PayloadAction<UserState>) => action.payload,
+    addTime: (state, action: PayloadAction<number>) => {
+      if (!state) return;
       const today = new Date();
       const curDay = new Date(
         Date.UTC(
@@ -26,11 +26,7 @@ const userSlice = createSlice({
       ).toISOString();
 
       const minutes = action.payload;
-      const existingRigor = state.rigor.find((r) => r.date === curDay);
-
-      // console.log(curDay);
-      // console.log(JSON.parse(JSON.stringify(existingRigor)));
-      // console.log(JSON.parse(JSON.stringify(state)));
+      const existingRigor = state.rigor.find((r: Rigor) => r.date === curDay);
 
       if (existingRigor) {
         existingRigor.minutesFocused += minutes;
@@ -40,51 +36,37 @@ const userSlice = createSlice({
           minutesFocused: minutes,
         });
       }
-      // console.log(JSON.parse(JSON.stringify(existingRigor)));
     },
-    clear: (state, action) => {
-      return null;
+    clear: () => {
+      window.localStorage.removeItem('loggedUser_riggorromma');
+      return initialState;
     },
   },
 });
 
-const { addTime, set, clear } = userSlice.actions;
+export const {addTime, set, clearUser} = userSlice.actions;
 
-function fetchUser(id) {
-  return async (dispatch) => {
-    const user = await userService.getUser(id);
-    dispatch(set(user));
-  };
-}
+export const fetchUser = (id: string) => async (dispatch: AppDispatch) => {
+  const user = await userService.getUser(id);
+  dispatch(set(user));
+};
 
-export function clearUser() {
-  return async (dispatch) => {
-    window.localStorage.removeItem("loggedUser_riggorromma");
-    dispatch(clear());
-  };
-}
+export const initializeUser = () => async (dispatch: AppDispatch) => {
+  const loggedUser = window.localStorage.getItem('loggedUser_riggorromma');
 
-export function initializeUser() {
-  return async (dispatch) => {
-    const loggedUser = window.localStorage.getItem("loggedUser_riggorromma");
+  if (loggedUser) {
+    const user: UserState = JSON.parse(loggedUser);
+    userService.setToken(user.token);
+    dispatch(fetchUser(user.id));
+  }
+};
 
-    if (loggedUser) {
-      const user = JSON.parse(loggedUser);
-      userService.setToken(user.token);
-      dispatch(fetchUser(user.id));
-    }
-  };
-}
-
-export function attemptLogin(username, password) {
-  return async (dispatch) => {
+export const attemptLogin =
+  (username: string, password: string) => async (dispatch: AppDispatch) => {
     try {
-      const user = await loginService.login({
-        username,
-        password,
-      });
+      const user = await loginService.login({username, password});
       window.localStorage.setItem(
-        "loggedUser_riggorromma",
+        'loggedUser_riggorromma',
         JSON.stringify(user)
       );
       userService.setToken(user.token);
@@ -94,11 +76,10 @@ export function attemptLogin(username, password) {
       dispatch(notifyLogin(false));
     }
   };
-}
 
-export function addRigor(minutes) {
-  return async (dispatch, getState) => {
-    // console.log("adding rigor", minutes);
+export const addRigor =
+  (minutes: number) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
     const state = getState();
     if (!state.user) return;
 
@@ -106,6 +87,5 @@ export function addRigor(minutes) {
     dispatch(addTime(minutes));
     dispatch(fetchUser(state.user.id));
   };
-}
 
 export default userSlice.reducer;
