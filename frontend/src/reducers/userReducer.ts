@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {AppDispatch, RootState} from '../store';
+import {AppDispatch} from '../store';
 import {notifyLogin} from './notificationReducer';
 
 import userService from '../Services/userService';
@@ -13,9 +13,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    set: (state, action: PayloadAction<UserState>) => action.payload,
-    addTime: (state, action: PayloadAction<number>) => {
-      if (!state) return;
+    set: (state: UserState | null, action: PayloadAction<UserState>) => {
+      state = action.payload;
+    },
+
+    addTime: (state: UserState | null, action: PayloadAction<number>) => {
+      if (state === null) return;
+
       const today = new Date();
       const curDay = new Date(
         Date.UTC(
@@ -28,16 +32,15 @@ const userSlice = createSlice({
       const minutes = action.payload;
       const existingRigor = state.rigor.find((r: Rigor) => r.date === curDay);
 
-      if (existingRigor) {
-        existingRigor.minutesFocused += minutes;
-      } else {
+      if (existingRigor) existingRigor.minutesFocused += minutes;
+      else
         state.rigor.push({
           date: curDay,
           minutesFocused: minutes,
         });
-      }
     },
-    clear: () => {
+
+    clearUser: () => {
       window.localStorage.removeItem('loggedUser_riggorromma');
       return initialState;
     },
@@ -79,13 +82,14 @@ export const attemptLogin =
 
 export const addRigor =
   (minutes: number) =>
-  async (dispatch: AppDispatch, getState: () => RootState) => {
-    const state = getState();
-    if (!state.user) return;
+  async (dispatch: AppDispatch, getState: () => UserState | null) => {
+    const state: UserState | null = getState();
 
-    await userService.addMinutes(minutes, state.user.id);
+    if (state === null) return;
+
+    await userService.addMinutes(minutes, state.id);
     dispatch(addTime(minutes));
-    dispatch(fetchUser(state.user.id));
+    dispatch(fetchUser(state.id));
   };
 
 export default userSlice.reducer;

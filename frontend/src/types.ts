@@ -9,3 +9,8 @@ export interface UserState {
   rigor: Rigor[];
   token: string;
 }
+
+export interface NotificationState {
+  message: string;
+  status: string;
+}

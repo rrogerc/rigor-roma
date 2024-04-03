@@ -1,17 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from '@reduxjs/toolkit';
 
 const runningSlice = createSlice({
-  name: "running",
+  name: 'running',
   initialState: false,
   reducers: {
-    setRunTrue: (state, action) => {
+    setRunTrue: () => {
       return true;
     },
-    setRunFalse: (state, action) => {
+    setRunFalse: () => {
       return false;
     },
   },
 });
 
-export const { setRunTrue, setRunFalse } = runningSlice.actions;
+export const {setRunTrue, setRunFalse} = runningSlice.actions;
 export default runningSlice.reducer;
