@@ -1,27 +1,27 @@
 // React
-import { useEffect } from "react";
+import React, {useEffect} from 'react';
 
 // Components
-import Menu from "./Components/Menu";
-import Notification from "./Components/Notification";
+import Menu from './Components/Menu';
+import Notification from './Components/Notification';
 
 // Pages
-import { Routes, Route } from "react-router-dom";
-import Timer from "./Pages/Timer";
-import Stopwatch from "./Pages/Stopwatch";
-import Statistics from "./Pages/Statistics";
-import Login from "./Pages/Login";
-import About from "./Pages/About";
-import CreateAccount from "./Pages/CreateAccount";
+import {Routes, Route} from 'react-router-dom';
+import Timer from './Pages/Timer';
+import Stopwatch from './Pages/Stopwatch';
+import Statistics from './Pages/Statistics';
+import Login from './Pages/Login';
+import About from './Pages/About';
+import CreateAccount from './Pages/CreateAccount';
 
 // redux
-import { useDispatch, useSelector } from "react-redux";
-import { initializeUser } from "./reducers/userReducer";
+import {useDispatch} from 'react-redux';
+import {initializeUser} from './reducers/userReducer';
 
 // debug
-import Print from "./Print";
+import Print from './Print';
 
-const App = () => {
+const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
