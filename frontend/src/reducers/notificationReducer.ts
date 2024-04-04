@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch} from '../store';
 
 import {NotificationState} from '../types';
@@ -24,51 +24,53 @@ const notificationSlice = createSlice({
 const {set, clear} = notificationSlice.actions;
 export default notificationSlice.reducer;
 
-export const finishFocus = (minutes: number) => {
-  return async (dispatch: AppDispatch) => {
+export const finishFocus = createAsyncThunk(
+  'notification/finishFocus',
+  async (minutes: number, {dispatch}) => {
     let msg = `You completed ${minutes} minutes of focused work!`;
     if (minutes === 1) msg = `You completed ${minutes} minute of focused work!`;
 
     dispatch(set({message: msg, status: 'success'}));
+
+    // Handle the clear action after a delay
     setTimeout(() => {
       dispatch(clear());
     }, 5000);
-  };
-};
+  }
+);
 
-export const notifyLogin = (success: boolean) => {
-  return async (dispatch: AppDispatch) => {
-    let msg: string;
-    if (success === true)
-      msg = 'Successfully logged in! You can now track your focus time.';
-    else msg = 'Failed to log in. Please check your username and password.';
-
+export const notifyLogin = createAsyncThunk(
+  'notification/notifyLogin',
+  async (success: boolean, {dispatch}) => {
+    const msg = success
+      ? 'Successfully logged in! You can now track your focus time.'
+      : 'Failed to log in. Please check your username and password.';
     const status = success ? 'success' : 'danger';
 
     dispatch(set({message: msg, status: status}));
     setTimeout(() => {
       dispatch(clear());
     }, 5000);
-  };
-};
+  }
+);
 
-export const notifyLogout = () => {
-  return async (dispatch: AppDispatch) => {
+export const notifyLogout = createAsyncThunk(
+  'notification/notifyLogout',
+  async (_, {dispatch}) => {
     const msg = 'Successfully logged out!';
-
     dispatch(set({message: msg, status: 'success'}));
     setTimeout(() => {
       dispatch(clear());
     }, 5000);
-  };
-};
+  }
+);
 
-export const notify = (msg: string, status: string) => {
-  return async (dispatch: AppDispatch) => {
+export const notify = createAsyncThunk(
+  'notification/notify',
+  async ({msg, status}: {msg: string; status: string}, {dispatch}) => {
     dispatch(set({message: msg, status: status}));
-
     setTimeout(() => {
       dispatch(clear());
     }, 5000);
-  };
-};
+  }
+);

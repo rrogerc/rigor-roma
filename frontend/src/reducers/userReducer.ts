@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch} from '../store';
 import {notifyLogin} from './notificationReducer';
 
@@ -49,23 +49,32 @@ const userSlice = createSlice({
 
 export const {addTime, set, clearUser} = userSlice.actions;
 
-export const fetchUser = (id: string) => async (dispatch: AppDispatch) => {
-  const user = await userService.getUser(id);
-  dispatch(set(user));
-};
-
-export const initializeUser = () => async (dispatch: AppDispatch) => {
-  const loggedUser = window.localStorage.getItem('loggedUser_riggorromma');
-
-  if (loggedUser) {
-    const user: UserState = JSON.parse(loggedUser);
-    userService.setToken(user.token);
-    dispatch(fetchUser(user.id));
+export const fetchUser = createAsyncThunk(
+  'user/fetchUser',
+  async (id: string) => {
+    const user = await userService.getUser(id);
+    return user;
   }
-};
+);
 
-export const attemptLogin =
-  (username: string, password: string) => async (dispatch: AppDispatch) => {
+export const initializeUser = createAsyncThunk(
+  'user/initializeUser',
+  async (_, {dispatch}) => {
+    const loggedUser = window.localStorage.getItem('loggedUser_riggorromma');
+    if (loggedUser) {
+      const user: UserState = JSON.parse(loggedUser);
+      userService.setToken(user.token);
+      await dispatch(fetchUser(user.id));
+    }
+  }
+);
+
+export const attemptLogin = createAsyncThunk(
+  'user/attemptLogin',
+  async (
+    {username, password}: {username: string; password: string},
+    {dispatch}
+  ) => {
     try {
       const user = await loginService.login({username, password});
       window.localStorage.setItem(
@@ -73,23 +82,26 @@ export const attemptLogin =
         JSON.stringify(user)
       );
       userService.setToken(user.token);
-      dispatch(fetchUser(user.id));
-      dispatch(notifyLogin(true));
+      await dispatch(fetchUser(user.id));
+      await dispatch(notifyLogin(true));
     } catch (error) {
-      dispatch(notifyLogin(false));
+      await dispatch(notifyLogin(false));
+      throw error;
     }
-  };
+  }
+);
 
-export const addRigor =
-  (minutes: number) =>
-  async (dispatch: AppDispatch, getState: () => UserState | null) => {
-    const state: UserState | null = getState();
+export const addRigor = createAsyncThunk(
+  'user/addRigor',
+  async (minutes: number, {dispatch, getState}) => {
+    const state = getState() as {user: UserState | null};
+    if (!state.user) return;
 
-    if (state === null) return;
+    await userService.addMinutes(minutes, state.user.id);
 
-    await userService.addMinutes(minutes, state.id);
     dispatch(addTime(minutes));
-    dispatch(fetchUser(state.id));
-  };
+    await dispatch(fetchUser(state.user.id));
+  }
+);
 
 export default userSlice.reducer;

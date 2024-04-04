@@ -1,31 +1,31 @@
-import { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
-import { addRigor } from "../reducers/userReducer";
-import { useDispatch } from "react-redux";
-import { finishFocus, notify } from "../reducers/notificationReducer";
-import { setRunFalse, setRunTrue } from "../reducers/runningReducer";
+import {useDispatch} from 'react-redux';
+import {addRigor} from '../reducers/userReducer';
+import {finishFocus, notify} from '../reducers/notificationReducer';
+import {setRunFalse, setRunTrue} from '../reducers/runningReducer';
 
-import { Form, Button } from "react-bootstrap";
+import {Form, Button} from 'react-bootstrap';
 
-const Timer = () => {
+const Timer: React.FC = () => {
   const dispatch = useDispatch();
   const [time, setTime] = useState(0);
   const [initial, setInitial] = useState(0);
 
-  const setTimer = (e) => {
+  const setTimer = e => {
     e.preventDefault();
 
     const minutes = Number(e.target[0].value);
 
     if (minutes === 0) {
-      dispatch(notify("Time set be be greater than 0 minutes", "danger"));
+      dispatch(notify('Time set be be greater than 0 minutes', 'danger'));
       return;
     }
 
     setInitial(minutes);
     dispatch(setRunTrue());
 
-    e.target[0].value = "";
+    e.target[0].value = '';
     setTime(minutes * 60);
   };
 
@@ -56,7 +56,9 @@ const Timer = () => {
       <h1>Timer</h1>
       {time > 0 ? (
         <div className="mt-3 d-flex align-items-center flex-column">
-          <h6 className="display-6 text-primary">{Math.floor(time / 60)} Minutes</h6>
+          <h6 className="display-6 text-primary">
+            {Math.floor(time / 60)} Minutes
+          </h6>
           <h6 className="text-warning"> {time % 60} seconds</h6>
         </div>
       ) : null}
