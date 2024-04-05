@@ -11,9 +11,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import './app.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
-
-root.render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
 	<Router>
 		<Provider store={store}>
 			<App />
