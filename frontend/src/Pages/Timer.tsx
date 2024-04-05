@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
+import { Button, Input } from '@nextui-org/react';
+import { motion } from 'framer-motion';
 
 import { addRigor } from '../reducers/userReducer';
 import { finishFocus, notify } from '../reducers/notificationReducer';
@@ -21,7 +22,7 @@ const Timer: React.FC = () => {
 
 		if (minutes === 0) {
 			dispatch(
-				notify({ msg: 'Time set be greater than 0 minutes', status: 'danger' })
+				notify({ msg: 'Time must be greater than 0 minutes', status: 'danger' })
 			);
 			return;
 		}
@@ -41,10 +42,9 @@ const Timer: React.FC = () => {
 			}; // cleanup, runs when time changes outside
 		}
 		if (time === 0 && initial !== 0) {
-			const tmp_init = initial;
-			dispatch(finishFocus(tmp_init));
+			dispatch(finishFocus(initial));
 			dispatch(setRunFalse());
-			dispatch(addRigor(tmp_init));
+			dispatch(addRigor(initial));
 			setInitial(0);
 		}
 	}, [time, initial, dispatch]);
@@ -56,27 +56,47 @@ const Timer: React.FC = () => {
 	}, [dispatch]);
 
 	return (
-		<div className="d-flex justify-content-center align-items-center vh-95 flex-column mt-2">
-			<h1>Timer</h1>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			className="flex justify-center items-center min-h-screen flex-col mt-2"
+		>
+			<motion.h1
+				initial={{ scale: 0 }}
+				animate={{ scale: 1 }}
+				transition={{ duration: 0.5 }}
+			>
+				Timer
+			</motion.h1>
 			{time > 0 ? (
-				<div className="mt-3 d-flex align-items-center flex-column">
-					<h6 className="display-6 text-primary">
+				<div className="mt-3 flex flex-col items-center">
+					<h6 className="text-2xl text-primary-500">
 						{Math.floor(time / 60)} Minutes
 					</h6>
-					<h6 className="text-warning"> {time % 60} seconds</h6>
+					<h6 className="text-yellow-400">{time % 60} seconds</h6>
 				</div>
 			) : null}
 			{time === 0 ? (
 				<>
-					<Form onSubmit={setTimer} id="setForm">
-						<input type="number" min="0" step="1" />
-					</Form>
-					<Button type="submit" form="setForm" className="mt-3">
-						Start
-					</Button>
+					<form
+						onSubmit={setTimer}
+						id="setForm"
+						className="flex flex-col items-center"
+					>
+						<Input type="number" min="0" step="1" />
+						<Button
+							type="submit"
+							form="setForm"
+							className="mt-3"
+							color="primary"
+						>
+							Start
+						</Button>
+					</form>
 				</>
 			) : null}
-		</div>
+		</motion.div>
 	);
 };
 

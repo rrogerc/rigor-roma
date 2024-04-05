@@ -7,14 +7,19 @@ import store from './store';
 // Router (for navigation)
 import { BrowserRouter as Router } from 'react-router-dom';
 
+// NextUI
+import { NextUIProvider } from '@nextui-org/react';
+
 // App
 import App from './App';
-import './app.css';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<Router>
 		<Provider store={store}>
-			<App />
+			<NextUIProvider>
+				<App />
+			</NextUIProvider>
 		</Provider>
 	</Router>
 );
