@@ -1,27 +1,31 @@
-import Heatmap from "../Components/Heatmap";
-import { useSelector } from "react-redux";
+import React from 'react';
+import {useSelector} from 'react-redux';
 
-import { Container, Row, Table } from "react-bootstrap";
+import {Container, Row, Table} from 'react-bootstrap';
+import {RootState} from '../store';
+import {UserState} from '../types';
+// import Heatmap from '../Components/Heatmap';
 
-function Statistics() {
-  const user = useSelector((state) => state.user);
+const Statistics: React.FC = () => {
+  // const data = Array.from({length: 365}, () => Math.floor(Math.random() * 10)); For Heatmap
 
-  const data = Array.from({ length: 365 }, () =>
-    Math.floor(Math.random() * 10)
-  );
-  function parseLocalDate(dateString) {
-    const [year, month, day] = dateString
-      .split("-")
-      .map((s) => parseInt(s, 10));
+  const user = useSelector<RootState, UserState | null>(state => state.user);
+
+  const parseLocalDate = (dateString: string) => {
+    const [year, month, day] = dateString.split('-').map(s => parseInt(s, 10));
     return new Date(year, month - 1, day); // Remember, months are 0-based in JS
-  }
+  };
 
-  function formatDate(date) {
-    const options = { year: "numeric", month: "long", day: "numeric" };
+  const formatDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
     return date.toLocaleDateString(undefined, options);
-  }
-  // console.log(user);
-  if (!user || user.length === 0 || !user.rigor)
+  };
+
+  if (!user)
     return (
       <Container className="mt-5">
         <Row>
@@ -40,7 +44,7 @@ function Statistics() {
           </tr>
         </thead>
         <tbody>
-          {user.rigor.map((time) => (
+          {user.rigor.map(time => (
             <tr key={time.date}>
               <td>{formatDate(parseLocalDate(time.date))}</td>
               <td>{time.minutesFocused} minutes</td>
@@ -48,10 +52,9 @@ function Statistics() {
           ))}
         </tbody>
       </Table>
-
       {/* <Heatmap data={data} /> */}
     </Container>
   );
-}
+};
 
 export default Statistics;

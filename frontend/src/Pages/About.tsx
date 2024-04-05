@@ -1,19 +1,20 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 
-const About = () => {
-	return (
-		<Container>
-			<Row>
-				<Col>
-					<h2>rigor-roma: pomodoro timer</h2>
-					<p>
-						this is a simple pomodoro timer that can track how much you've focused.
+const About: React.FC = () => {
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <h2>Rigor-roma: Pomodoro Study Timer</h2>
+          <p>
+            This is a simple pomodoro timer that can track how much you've
+            focused.
           </p>
-				</Col>
-			</Row>
-		</Container>
-	);
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default About;

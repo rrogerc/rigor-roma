@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch} from '../store';
 import {notifyLogin} from './notificationReducer';
 
 import * as userService from '../Services/userService';

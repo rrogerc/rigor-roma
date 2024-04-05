@@ -1,6 +1,4 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch} from '../store';
-
 import {NotificationState} from '../types';
 
 const initialState: NotificationState = {

@@ -1,42 +1,53 @@
-import { useState } from "react";
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 
-import userService from "../Services/userService";
+import * as userService from '../Services/userService';
+import {AppDispatch} from '../store';
+import {notify} from '../reducers/notificationReducer';
 
-import { Form, Button } from "react-bootstrap";
+import {Form, Button} from 'react-bootstrap';
 
-import { useNavigate } from "react-router-dom";
-
-import { notify } from "../reducers/notificationReducer";
-import { useDispatch } from "react-redux";
-
-const CreateAccount = () => {
-  const dispatch = useDispatch();
+const CreateAccount: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const create = async (e) => {
+  const create = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const tmp_username = username;
     const tmp_password = password;
-    setUsername("");
-    setPassword("");
+    setUsername('');
+    setPassword('');
     if (tmp_password.length === 0 || tmp_username.length === 0) {
-      dispatch(notify("Username or password cannot be empty", "danger"));
+      dispatch(
+        notify({msg: 'Username or password cannot be empty', status: 'danger'})
+      );
       return;
     }
     if (tmp_username.length < 3) {
-      dispatch(notify("Username must be at least 3 characters long", "danger"));
+      dispatch(
+        notify({
+          msg: 'Username must be at least 3 characters long',
+          status: 'danger',
+        })
+      );
       return;
     }
     if (tmp_password.length < 5) {
-      dispatch(notify("Password must be at least 5 characters long", "danger"));
+      dispatch(
+        notify({
+          msg: 'Password must be at least 5 characters long',
+          status: 'danger',
+        })
+      );
       return;
     }
-    dispatch(notify("Account made successfully!", "success"));
-    navigate("/login");
+    dispatch(notify({msg: 'Account made successfully!', status: 'success'}));
+    navigate('/login');
     await userService.userCreate(tmp_username, tmp_password);
   };
 
@@ -48,7 +59,7 @@ const CreateAccount = () => {
           <Form.Label>Username:</Form.Label>
           <Form.Control
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             className="mb-2"
           />
 
@@ -56,7 +67,7 @@ const CreateAccount = () => {
           <Form.Control
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             className="mb-2"
           />
 

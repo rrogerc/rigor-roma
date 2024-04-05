@@ -1,32 +1,32 @@
-import { useState } from "react";
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 
-import { useDispatch } from "react-redux";
-import { attemptLogin } from "../reducers/userReducer";
+import {attemptLogin} from '../reducers/userReducer';
+import {AppDispatch} from '../store';
 
-import { Form, Button } from "react-bootstrap";
+import {Form, Button} from 'react-bootstrap';
 
-import { useNavigate } from "react-router-dom";
-
-const Login = () => {
-  const dispatch = useDispatch();
+const Login: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const login = (e) => {
+  const login = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate("/");
+    navigate('/');
 
-    dispatch(attemptLogin(username, password));
+    dispatch(attemptLogin({username, password}));
 
-    setUsername("");
-    setPassword("");
+    setUsername('');
+    setPassword('');
   };
 
-  const navigateCreateAccount = (e) => {
+  const navigateCreateAccount = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    navigate("/create-account");
+    navigate('/create-account');
   };
 
   return (
@@ -37,7 +37,7 @@ const Login = () => {
           <Form.Label>Username:</Form.Label>
           <Form.Control
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             className="mb-2"
           />
 
@@ -45,7 +45,7 @@ const Login = () => {
           <Form.Control
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             className="mb-2"
           />
 

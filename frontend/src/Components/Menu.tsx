@@ -1,19 +1,21 @@
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React from 'react';
+import {Navbar, Nav, Container, Button} from 'react-bootstrap';
+import {Link, useLocation} from 'react-router-dom';
 
-import { useDispatch, useSelector } from "react-redux";
-import { clearUser } from "../reducers/userReducer";
-import { notifyLogout } from "../reducers/notificationReducer";
+import {useDispatch, useSelector} from 'react-redux';
+import {clearUser} from '../reducers/userReducer';
+import {notifyLogout} from '../reducers/notificationReducer';
 
-import { useLocation } from "react-router-dom";
+import {AppDispatch, RootState} from '../store';
+import {UserState} from '../types';
 
-const Menu = () => {
-  const user = useSelector((state) => state.user);
-  const isRunning = useSelector((state) => state.running);
-  const isLoggedIn = user == null ? false : true;
+const Menu: React.FC = () => {
+  const user = useSelector<RootState, UserState | null>(state => state.user);
+  const isRunning = useSelector<RootState, boolean>(state => state.running);
+  const isLoggedIn = user === null ? false : true;
 
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleLogout = () => {
     dispatch(clearUser());
@@ -43,7 +45,7 @@ const Menu = () => {
           </Nav>
         </Navbar.Collapse>
         <Nav>
-          {location.pathname === "/login" ? (
+          {location.pathname === '/login' ? (
             <></>
           ) : isLoggedIn ? (
             <Button variant="outline-primary" onClick={handleLogout}>

@@ -1,31 +1,35 @@
 import React, {useEffect, useState} from 'react';
-
 import {useDispatch} from 'react-redux';
+import {Form, Button} from 'react-bootstrap';
+
 import {addRigor} from '../reducers/userReducer';
 import {finishFocus, notify} from '../reducers/notificationReducer';
 import {setRunFalse, setRunTrue} from '../reducers/runningReducer';
-
-import {Form, Button} from 'react-bootstrap';
+import {AppDispatch} from '../store';
 
 const Timer: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
   const [time, setTime] = useState(0);
   const [initial, setInitial] = useState(0);
 
-  const setTimer = e => {
+  const setTimer = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const minutes = Number(e.target[0].value);
+    const minutesInput = e.currentTarget.elements[0] as HTMLInputElement;
+    const minutes = Number(minutesInput.value);
 
     if (minutes === 0) {
-      dispatch(notify('Time set be be greater than 0 minutes', 'danger'));
+      dispatch(
+        notify({msg: 'Time set be greater than 0 minutes', status: 'danger'})
+      );
       return;
     }
 
     setInitial(minutes);
     dispatch(setRunTrue());
 
-    e.target[0].value = '';
+    minutesInput.value = '';
     setTime(minutes * 60);
   };
 
@@ -43,6 +47,7 @@ const Timer: React.FC = () => {
       dispatch(addRigor(tmp_init));
       setInitial(0);
     }
+    return () => {};
   }, [time, initial, dispatch]);
 
   useEffect(() => {
