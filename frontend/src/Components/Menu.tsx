@@ -52,7 +52,7 @@ const Menu: React.FC = () => {
               Logout
             </Button>
           ) : (
-            <Link as={Link} to="/login" className="btn btn-outline-success">
+            <Link to="/login" className="btn btn-outline-success">
               Login
             </Link>
           )}
