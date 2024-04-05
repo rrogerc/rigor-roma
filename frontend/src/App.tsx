@@ -30,7 +30,7 @@ const App: React.FC = () => {
 	}, [dispatch]);
 
 	return (
-		<div className="min-h-screen flex flex-col">
+		<div className="flex flex-col h-screen">
 			<Menu />
 			<div className="flex-grow">
 				<div className="max-w-4xl mx-auto p-4">

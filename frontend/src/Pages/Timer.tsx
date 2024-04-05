@@ -4,7 +4,7 @@ import { Button, Input } from '@nextui-org/react';
 import { motion } from 'framer-motion';
 
 import { addRigor } from '../reducers/userReducer';
-import { finishFocus, notify } from '../reducers/notificationReducer';
+import { finishFocus, notify, clear } from '../reducers/notificationReducer';
 import { setRunFalse, setRunTrue } from '../reducers/runningReducer';
 import { AppDispatch } from '../store';
 
@@ -29,6 +29,7 @@ const Timer: React.FC = () => {
 
 		setInitial(minutes);
 		dispatch(setRunTrue());
+		dispatch(clear());
 
 		minutesInput.value = '';
 		setTime(minutes * 60);
@@ -60,12 +61,11 @@ const Timer: React.FC = () => {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
-			className="flex justify-center items-center min-h-screen flex-col mt-2"
 		>
 			<motion.h1
-				initial={{ scale: 0 }}
-				animate={{ scale: 1 }}
-				transition={{ duration: 0.5 }}
+				initial={{ y: -20, opacity: 0 }}
+				animate={{ y: 0, opacity: 1 }}
+				className="mb-3 text-3xl font-bold"
 			>
 				Timer
 			</motion.h1>
@@ -79,12 +79,8 @@ const Timer: React.FC = () => {
 			) : null}
 			{time === 0 ? (
 				<>
-					<form
-						onSubmit={setTimer}
-						id="setForm"
-						className="flex flex-col items-center"
-					>
-						<Input type="number" min="0" step="1" />
+					<form onSubmit={setTimer} id="setForm">
+						<Input type="number" min="0" step="1" className="w-64" />
 						<Button
 							type="submit"
 							form="setForm"

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../store';
 import { UserState } from '../types';
+import { motion } from 'framer-motion';
 // import Heatmap from '../Components/Heatmap';
 
 const Statistics: React.FC = () => {
@@ -28,11 +29,15 @@ const Statistics: React.FC = () => {
 
 	if (!user)
 		return (
-			<div className="mt-20 container mx-auto px-4">
-				<div className="text-center">
-					<h5>Login to see your statistics.</h5>
-				</div>
-			</div>
+			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+				<motion.h1
+					initial={{ y: -20, opacity: 0 }}
+					animate={{ y: 0, opacity: 1 }}
+					className="mb-2 text-2xl font-bold"
+				>
+					Login to see statistics
+				</motion.h1>
+			</motion.div>
 		);
 
 	return (

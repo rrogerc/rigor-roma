@@ -44,11 +44,7 @@ const Stopwatch: React.FC = () => {
 	};
 
 	return (
-		<motion.div
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			className="flex justify-center items-center min-h-screen flex-col mt-2"
-		>
+		<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
 			<motion.h1
 				initial={{ y: -20, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}

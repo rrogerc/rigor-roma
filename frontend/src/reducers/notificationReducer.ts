@@ -19,7 +19,7 @@ const notificationSlice = createSlice({
 	},
 });
 
-const { set, clear } = notificationSlice.actions;
+export const { set, clear } = notificationSlice.actions;
 export default notificationSlice.reducer;
 
 export const finishFocus = createAsyncThunk(

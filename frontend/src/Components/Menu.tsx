@@ -25,10 +25,10 @@ const Menu: React.FC = () => {
 	return (
 		<nav className="bg-gray-100 shadow-md p-4">
 			<div className="container mx-auto flex justify-between items-center">
-				<Link to="/" className="text-xl font-semibold">
-					RigorRoma
-				</Link>
-				<div className="hidden md:flex space-x-4">
+				<div className="flex items-center space-x-7">
+					<Link to="/" className="text-xl font-semibold">
+						RigorRoma
+					</Link>
 					<Link to="/timer" className="text-gray-700 hover:text-gray-900">
 						Timer
 					</Link>
