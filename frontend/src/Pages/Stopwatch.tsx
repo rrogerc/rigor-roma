@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-
+import { Button as NextUIButton } from '@nextui-org/react';
+import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
+
 import { finishFocus } from '../reducers/notificationReducer';
 import { addRigor } from '../reducers/userReducer';
 import { setRunFalse, setRunTrue } from '../reducers/runningReducer';
@@ -14,13 +15,12 @@ const Stopwatch: React.FC = () => {
 	const [isRunning, setIsRunning] = useState(false);
 
 	useEffect(() => {
+		let timer: ReturnType<typeof setTimeout>;
 		if (isRunning) {
-			const timer = setTimeout(() => setTime(time + 1), 1000);
-			return () => {
-				clearTimeout(timer);
-			}; // cleanup, runs when time changes outside
+			timer = setTimeout(() => setTime(time + 1), 1000);
 		}
-	}, [time, isRunning, dispatch]);
+		return () => clearTimeout(timer); // cleanup, runs when time changes or component unmounts
+	}, [time, isRunning]);
 
 	useEffect(() => {
 		return () => {
@@ -29,11 +29,11 @@ const Stopwatch: React.FC = () => {
 	}, [dispatch]);
 
 	const toggleTimer = () => {
+		setIsRunning(!isRunning);
 		if (!isRunning) {
 			setTime(0);
 			dispatch(setRunTrue());
-		}
-		if (isRunning) {
+		} else {
 			const minutes = Math.floor(time / 60);
 			if (minutes > 0) {
 				dispatch(finishFocus(minutes));
@@ -41,28 +41,40 @@ const Stopwatch: React.FC = () => {
 			}
 			dispatch(setRunFalse());
 		}
-		setIsRunning(!isRunning);
 	};
 
 	return (
-		<div className="d-flex justify-content-center align-items-center vh-95 flex-column mt-2">
-			<h1 className="mb-3">Stopwatch</h1>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			className="flex justify-center items-center min-h-screen flex-col mt-2"
+		>
+			<motion.h1
+				initial={{ y: -20, opacity: 0 }}
+				animate={{ y: 0, opacity: 1 }}
+				className="mb-3 text-3xl font-bold"
+			>
+				Stopwatch
+			</motion.h1>
 			{isRunning ? (
-				<div className="mt-3 mb-3 d-flex align-items-center flex-column">
-					<h6 className="display-6 text-primary">
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					className="mt-3 mb-3 flex flex-col items-center"
+				>
+					<h6 className="text-2xl text-blue-500">
 						{Math.floor(time / 60)} minutes
 					</h6>
-					<h6 className="text-warning">{time % 60} seconds</h6>
-				</div>
+					<h6 className="text-yellow-400">{time % 60} seconds</h6>
+				</motion.div>
 			) : null}
-			<Button
-				className="mt-1"
-				variant={isRunning ? 'danger' : 'primary'}
+			<NextUIButton
+				color={isRunning ? 'danger' : 'primary'}
 				onClick={toggleTimer}
 			>
 				{isRunning ? 'Stop' : 'Start'}
-			</Button>
-		</div>
+			</NextUIButton>
+		</motion.div>
 	);
 };
 

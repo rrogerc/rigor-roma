@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Button, Input } from '@nextui-org/react';
 
 import { attemptLogin } from '../reducers/userReducer';
 import { AppDispatch } from '../store';
-
-import { Form, Button } from 'react-bootstrap';
 
 const Login: React.FC = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -24,39 +23,56 @@ const Login: React.FC = () => {
 		setPassword('');
 	};
 
-	const navigateCreateAccount = (e: React.FormEvent<HTMLButtonElement>) => {
-		e.preventDefault();
+	const navigateCreateAccount = () => {
 		navigate('/create-account');
 	};
 
 	return (
 		<>
-			<h2>Login</h2>
-			<Form onSubmit={login}>
-				<Form.Group>
-					<Form.Label>Username:</Form.Label>
-					<Form.Control
+			<h2 className="text-2xl font-bold mb-4">Login</h2>
+			<form onSubmit={login} className="space-y-4">
+				<div>
+					<label
+						htmlFor="username"
+						className="block text-sm font-medium text-gray-700"
+					>
+						Username:
+					</label>
+					<Input
+						fullWidth
+						color="primary"
+						size="lg"
+						placeholder="Username"
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
-						className="mb-2"
 					/>
+				</div>
 
-					<Form.Label>Password: </Form.Label>
-					<Form.Control
+				<div>
+					<label
+						htmlFor="password"
+						className="block text-sm font-medium text-gray-700"
+					>
+						Password:
+					</label>
+					<Input
 						type="password"
+						fullWidth
+						color="primary"
+						size="lg"
+						placeholder="Password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
-						className="mb-2"
 					/>
+				</div>
 
-					<Button variant="primary" type="submit" className="me-2">
-						Login
-					</Button>
-				</Form.Group>
-			</Form>
+				<Button type="submit" color="primary" className="mr-2">
+					Login
+				</Button>
+			</form>
 
-			<p className="mb-1 mt-4">Don't have an account?</p>
-			<Button variant="outline-secondary" onClick={navigateCreateAccount}>
+			<p className="mt-4 mb-1">Don't have an account?</p>
+			<Button color="secondary" onClick={navigateCreateAccount}>
 				Create Account
 			</Button>
 		</>

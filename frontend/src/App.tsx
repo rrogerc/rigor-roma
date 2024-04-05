@@ -30,19 +30,23 @@ const App: React.FC = () => {
 	}, [dispatch]);
 
 	return (
-		<div className="container">
+		<div className="min-h-screen flex flex-col">
 			<Menu />
-			<Notification />
-			<Routes>
-				<Route path="/" element={<About />} />
-				<Route path="/timer" element={<Timer />} />
-				<Route path="/stopwatch" element={<Stopwatch />} />
-				<Route path="/statistics" element={<Statistics />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/create-account" element={<CreateAccount />} />
-			</Routes>
-			{/* <Print /> */}
+			<div className="flex-grow">
+				<div className="max-w-4xl mx-auto p-4">
+					<Notification />
+					<Routes>
+						<Route path="/" element={<About />} />
+						<Route path="/timer" element={<Timer />} />
+						<Route path="/stopwatch" element={<Stopwatch />} />
+						<Route path="/statistics" element={<Statistics />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/create-account" element={<CreateAccount />} />
+					</Routes>
+				</div>
+			</div>
 		</div>
 	);
 };
+
 export default App;

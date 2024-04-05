@@ -1,13 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Container, Row, Table } from 'react-bootstrap';
 import { RootState } from '../store';
 import { UserState } from '../types';
 // import Heatmap from '../Components/Heatmap';
 
 const Statistics: React.FC = () => {
-	// const data = Array.from({length: 365}, () => Math.floor(Math.random() * 10)); For Heatmap
+	// const data = Array.from({length: 365}, () => Math.floor(Math.random() * 10)); // For Heatmap
 
 	const user = useSelector<RootState, UserState | null>((state) => state.user);
 
@@ -15,7 +14,7 @@ const Statistics: React.FC = () => {
 		const [year, month, day] = dateString
 			.split('-')
 			.map((s) => parseInt(s, 10));
-		return new Date(year, month - 1, day); // Remember, months are 0-based in JS
+		return new Date(year, month - 1, day);
 	};
 
 	const formatDate = (date: Date) => {
@@ -29,33 +28,43 @@ const Statistics: React.FC = () => {
 
 	if (!user)
 		return (
-			<Container className="mt-5">
-				<Row>
+			<div className="mt-20 container mx-auto px-4">
+				<div className="text-center">
 					<h5>Login to see your statistics.</h5>
-				</Row>
-			</Container>
+				</div>
+			</div>
 		);
 
 	return (
-		<Container className="d-flex justify-content-center align-items-center vh-95 flex-column">
-			<Table striped bordered hover className="mt-5">
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>Minutes Focused</th>
-					</tr>
-				</thead>
-				<tbody>
-					{user.rigor.map((time) => (
-						<tr key={time.date}>
-							<td>{formatDate(parseLocalDate(time.date))}</td>
-							<td>{time.minutesFocused} minutes</td>
+		<div className="flex justify-center items-center min-h-screen flex-col mt-5">
+			<div className="shadow-lg rounded-lg overflow-hidden">
+				<table className="min-w-full leading-normal">
+					<thead>
+						<tr>
+							<th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+								Date
+							</th>
+							<th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+								Minutes Focused
+							</th>
 						</tr>
-					))}
-				</tbody>
-			</Table>
-			{/* <Heatmap data={data} /> */}
-		</Container>
+					</thead>
+					<tbody>
+						{user.rigor.map((time) => (
+							<tr key={time.date}>
+								<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+									{formatDate(parseLocalDate(time.date))}
+								</td>
+								<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+									{time.minutesFocused} minutes
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+			{/* <Heatmap data={data} /> Uncomment and ensure Heatmap is styled or adapted for TailwindCSS */}
+		</div>
 	);
 };
 

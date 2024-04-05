@@ -1,65 +1,63 @@
 import React from 'react';
-import {Navbar, Nav, Container, Button} from 'react-bootstrap';
-import {Link, useLocation} from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {useDispatch, useSelector} from 'react-redux';
-import {clearUser} from '../reducers/userReducer';
-import {notifyLogout} from '../reducers/notificationReducer';
-
-import {AppDispatch, RootState} from '../store';
-import {UserState} from '../types';
+import { clearUser } from '../reducers/userReducer';
+import { notifyLogout } from '../reducers/notificationReducer';
+import { AppDispatch, RootState } from '../store';
+import { UserState } from '../types';
 
 const Menu: React.FC = () => {
-  const user = useSelector<RootState, UserState | null>(state => state.user);
-  const isRunning = useSelector<RootState, boolean>(state => state.running);
-  const isLoggedIn = user === null ? false : true;
+	const user = useSelector<RootState, UserState | null>((state) => state.user);
+	const isRunning = useSelector<RootState, boolean>((state) => state.running);
+	const isLoggedIn = user !== null;
 
-  const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
+	const location = useLocation();
+	const dispatch = useDispatch<AppDispatch>();
 
-  const handleLogout = () => {
-    dispatch(clearUser());
-    dispatch(notifyLogout());
-  };
+	const handleLogout = () => {
+		dispatch(clearUser());
+		dispatch(notifyLogout());
+	};
 
-  if (isRunning) return <></>;
+	if (isRunning) return null;
 
-  return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand as={Link} to="/">
-          RigorRoma
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/timer">
-              Timer
-            </Nav.Link>
-            <Nav.Link as={Link} to="/stopwatch">
-              Stopwatch
-            </Nav.Link>
-            <Nav.Link as={Link} to="/statistics">
-              Statistics
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-        <Nav>
-          {location.pathname === '/login' ? (
-            <></>
-          ) : isLoggedIn ? (
-            <Button variant="outline-primary" onClick={handleLogout}>
-              Logout
-            </Button>
-          ) : (
-            <Link to="/login" className="btn btn-outline-success">
-              Login
-            </Link>
-          )}
-        </Nav>
-      </Container>
-    </Navbar>
-  );
+	return (
+		<nav className="bg-gray-100 shadow-md p-4">
+			<div className="container mx-auto flex justify-between items-center">
+				<Link to="/" className="text-xl font-semibold">
+					RigorRoma
+				</Link>
+				<div className="hidden md:flex space-x-4">
+					<Link to="/timer" className="text-gray-700 hover:text-gray-900">
+						Timer
+					</Link>
+					<Link to="/stopwatch" className="text-gray-700 hover:text-gray-900">
+						Stopwatch
+					</Link>
+					<Link to="/statistics" className="text-gray-700 hover:text-gray-900">
+						Statistics
+					</Link>
+				</div>
+				{location.pathname !== '/login' &&
+					(isLoggedIn ? (
+						<button
+							onClick={handleLogout}
+							className="text-gray-700 border border-gray-300 hover:bg-gray-200 px-3 py-1 rounded"
+						>
+							Logout
+						</button>
+					) : (
+						<Link
+							to="/login"
+							className="text-gray-700 border border-green-500 hover:bg-green-500 hover:text-white px-3 py-1 rounded"
+						>
+							Login
+						</Link>
+					))}
+			</div>
+		</nav>
+	);
 };
 
 export default Menu;
