@@ -30,10 +30,12 @@ const About: React.FC = () => {
 					>
 						Rigor-roma: a Pomodoro Study Timer
 					</motion.h2>
-					<motion.p className="text-lg md:text-xl" variants={itemVariants}>
-						This is a simple pomodoro timer that can track how much you've
-						focused.
-					</motion.p>
+					<div style={{ width: '90%', margin: '0 auto' }}>
+						<motion.p className="text-lg md:text-xl" variants={itemVariants}>
+							This is a simple pomodoro timer that can track how much you've
+							focused.
+						</motion.p>
+					</div>
 				</motion.div>
 			</motion.div>
 		</div>
