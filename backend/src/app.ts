@@ -12,13 +12,13 @@ import errorHandler from './utils/errorHandler';
 const app = express();
 
 app.use(express.json());
-app.use(express.static('build'));
+app.use(express.static('dist'));
 
 app.use('/api/users', userRouter);
 app.use('/api/login', loginRouter);
 
 app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+	res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
 });
 
 app.use(errorHandler);
