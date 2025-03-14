@@ -148,6 +148,6 @@ cd rigorroma
 ---
 ## Screenshots
 
+![countdown](./screenshots/countdown.png)
 ![homepage](./screenshots/home.png)
 ![stopwatch](./screenshots/stopwatch.png)
-![countdown](./screenshots/countdown.png)
