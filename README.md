@@ -146,7 +146,6 @@ cd rigorroma
 | GET    | `*` (Fallback Route)   | Serves the frontend application       |
 
 ---
-```
 ## Screenshots
 
 ![homepage](./screenshots/home.png)
