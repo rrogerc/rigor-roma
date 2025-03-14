@@ -102,7 +102,7 @@ cd rigorroma
 
 ---
 
-## 🌐 Backend Overview
+## Backend Overview
 
 - **app.ts**: Initializes the Express app, configures middleware (JSON parsing, static file serving), connects to MongoDB, and sets up routes.
 - **loginRouter.ts**: Manages user authentication; validates credentials using bcrypt and issues JWT tokens.
@@ -113,7 +113,7 @@ cd rigorroma
 
 ---
 
-## 🎨 Frontend Overview
+## Frontend Overview
 
 - **App.tsx**: The main application component that sets up routing to various pages (About, Timer, Stopwatch, Statistics, Login, Create Account).
 - **main.tsx**: Renders the application and wraps it with Redux Provider, NextUIProvider, and Router.
@@ -136,7 +136,7 @@ cd rigorroma
 
 ---
 
-## ⚙️ API Endpoints
+## API Endpoints
 
 | Method | Endpoint               | Description                           |
 |--------|------------------------|---------------------------------------|
