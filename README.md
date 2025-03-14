@@ -1,6 +1,6 @@
-# RigorRoma: Pomodoro Web App Timer
+# Rigor Roma: Pomodoro Web App
 
-RigorRoma is a full-stack Pomodoro timer web application designed to help you stay focused and track your study sessions. This project leverages modern web technologies to offer a smooth user experience with visual feedback, session tracking, and user authentication.
+Rigor Roma is a full-stack Pomodoro timer web application designed to help you stay focused and track your study sessions. This project leverages modern web technologies to offer a smooth user experience with visual feedback, session tracking, and user authentication.
 
 ---
 
